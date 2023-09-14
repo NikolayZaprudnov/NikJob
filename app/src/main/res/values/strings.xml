@@ -1,0 +1,45 @@
+<resources>
+    <string name="app_name">NikJob</string>
+    <string name="nmedia">Внезапно, действия представителей оппозиции неоднозначны и будут описаны максимально подробно. Но граница обучения кадров, а также свежий взгляд на привычные вещи — безусловно открывает новые горизонты для поэтапного и последовательного развития общества. Повседневная практика показывает, что глубокий уровень погружения влечет за собой процесс внедрения и модернизации глубокомысленных рассуждений. В рамках спецификации современных стандартов, ключевые особенности структуры проекта объединены в целые кластеры себе подобных. В рамках спецификации современных стандартов, реплицированные с зарубежных источников, современные исследования заблокированы в рамках своих собственных рациональных ограничений.</string>
+    <string name="author_name">Author Name</string>
+    <string name="reposts">Reposts</string>
+    <string name="likes">Likes</string>
+    <string name="comments">Comments</string>
+    <string name="draftText">Draft saved</string>
+    <string name="views">Views</string>
+    <string name="date" translatable="false">Date</string>
+    <string name="post_text" translatable="false">Post Text</string>
+    <string name="error_empty_content">Content cant be empty</string>
+    <string name="notEdit">Editing has been ondone</string>
+    <string name="remove">Remove</string>
+    <string name="edit">Edit</string>
+    <string name="channel_remote_name">ТNotification</string>
+    <string name="notification_user_liked">User %1$s liked post %2$s</string>
+    <string name="notification_new_post">Author %1$s public post: </string>
+    <string name="notification_error">Error in sending notification</string>
+    <string name="title_activity_intent_handler">IntentHandlerActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="channel_remote_description">Notificaton from remote server</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="description_post_save">Save</string>
+    <string name="add_post" />
+    <string name="empty_posts">No posts.  \n New posts will be displayed here/</string>
+    <string name="retry_loading">Retry</string>
+    <string name="error_loading">Please, try again later</string>
+    <string name="sign_out">sign out</string>
+    <string name="sign_in">sign in</string>
+    <string name="sign_up">sign up</string>
+    <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="name">Name</string>
+    <string name="repeat_password">Repeat Password</string>
+    <string name="registration">Registration</string>
+    <string name="fields_do_not_match">"Password" and "Repeat password" fields do not match</string>
+    />
+</resources>

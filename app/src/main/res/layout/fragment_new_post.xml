@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.AppActivity">
+
+    <ScrollView
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start|top"
+                android:inputType="textMultiLine"
+                android:background="@android:color/transparent" />
+
+            <FrameLayout
+                android:id="@+id/photoContainer"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/preview"
+                    android:adjustViewBounds="true"
+                    tools:srcCompat="@tools:sample/avatars[5]"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/remotePhoto"
+                    android:text="@string/remove"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </FrameLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="horizontal"
+        android:id="@+id/bottomAppBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="?colorSurface"
+        style="@style/Widget.MaterialComponents.BottomAppBar.Colored">
+
+        <ImageButton
+            android:id="@+id/pickPhoto"
+            android:padding="@dimen/common_spacing"
+            android:background="?selectableItemBackground"
+            app:srcCompat="@drawable/ic_baseline_add_photo_alternate_24"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ImageButton
+            android:id="@+id/takePhoto"
+            android:background="?selectableItemBackground"
+            android:padding="@dimen/common_spacing"
+            app:srcCompat="@drawable/ic_baseline_camera_alt_24"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+    <!--        android:id="@+id/ok"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:contentDescription="@string/description_post_save"-->
+    <!--        app:layout_anchor="@id/bottomAppBar"-->
+    <!--        app:srcCompat="@drawable/ic_baseline_ok_24" />-->
+
+    <!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+    <!--        android:id="@+id/not"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:contentDescription="@string/description_post_save"-->
+    <!--        android:visibility="gone"-->
+    <!--        app:layout_anchor="@id/bottomAppBar"-->
+    <!--        app:srcCompat="@android:drawable/ic_delete" />-->
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

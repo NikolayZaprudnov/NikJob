@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">NikJob</string>
+    <string name="nmedia">Внезапно, действия представителей оппозиции неоднозначны и будут описаны максимально подробно. Но граница обучения кадров, а также свежий взгляд на привычные вещи — безусловно открывает новые горизонты для поэтапного и последовательного развития общества. Повседневная практика показывает, что глубокий уровень погружения влечет за собой процесс внедрения и модернизации глубокомысленных рассуждений. В рамках спецификации современных стандартов, ключевые особенности структуры проекта объединены в целые кластеры себе подобных. В рамках спецификации современных стандартов, реплицированные с зарубежных источников, современные исследования заблокированы в рамках своих собственных рациональных ограничений.</string>
+    <string name="author_name">Author Name</string>
+    <string name="reposts">Репосты</string>
+    <string name="likes">Лайки</string>
+    <string name="comments">Комменты</string>
+    <string name="views">Просмотры</string>
+    <string name="draftText">Черновик сохранён</string>
+    <string name="error_empty_content">Текст поста не может быть пустым</string>
+    <string name="remove">Удалить</string>
+    <string name="edit">Редактировать</string>
+    <string name="channel_remote_name">Уведомление</string>
+    <string name="channel_remote_description">Уведомление с удаленного сервера</string>
+    <string name="notification_user_liked">Пользователь %1$s лайкнул пост %2$s</string>
+    <string name="notification_new_post">Автор %1$s опубликовал пост: </string>
+    <string name="notification_error">Ошибка в передаче уведомления</string>
+    <string name="empty_posts">Нет постов \n Новые посты будут отображаться здесь</string>
+    <string name="notEdit">Редактирование было отменено</string>
+    <string name="retry_loading">Повторить</string>
+    <string name="error_loading">Пожалуйста, попробуйте позже</string>
+    <string name="add_post" />
+    <string name="sign_out">Выйти</string>
+    <string name="sign_in">Войти</string>
+    <string name="sign_up">Зарегистрироваться</string>
+    <string name="login">Логин</string>
+    <string name="password">Пароль</string>
+    <string name="name">Имя Пользователя</string>
+    <string name="repeat_password">Повторите Пароль</string>
+    <string name="registration">Зарегистрироваться</string>
+    <string name="fields_do_not_match">Не совпадает поле "Пароль" и "Повторите пароль"</string>
+</resources>
