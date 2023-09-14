@@ -16,26 +16,26 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import ru.netology.nikjob.R
 import ru.netology.nikjob.activity.NewPostFragment.Companion.textArg
 import ru.netology.nikjob.adapter.*
 import ru.netology.nikjob.auth.AppAuth
 import ru.netology.nikjob.databinding.FragmentEventBinding
-import ru.netology.nikjob.databinding.FragmentFeedBinding
 import ru.netology.nikjob.dialog.CheckRegistrationDialog
 import ru.netology.nikjob.dto.Event
-import ru.netology.nikjob.dto.Post
 import ru.netology.nikjob.enumeration.AttachmentType
 import ru.netology.nikjob.viewmodel.AuthViewModel
-import ru.netology.nikjob.viewmodel.PostViewModel
+import ru.netology.nikjob.viewmodel.EventViewModel
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class EventFragment : Fragment() {
     @Inject
     lateinit var appAuth: AppAuth
 
-    private val viewModel: PostViewModel by activityViewModels()
+    private val viewModel: EventViewModel by activityViewModels()
     private val authViewModel: AuthViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -60,9 +60,7 @@ class EventFragment : Fragment() {
                     dialog.show(manager, "")
                 } else {
                     if (event.likedByMe == false) {
-                        viewModel.likeById(event.id)
-                    } else {
-                        viewModel.unlikeById(event.id)
+                        viewModel.likeById(event)
                     }
                 }
             }
@@ -71,7 +69,6 @@ class EventFragment : Fragment() {
                 if (!authViewModel.authorized) {
                     dialog.show(manager, "")
                 } else {
-                    viewModel.repostById(event.id)
                     val intent = Intent().apply {
                         action = Intent.ACTION_SEND
                         putExtra(Intent.EXTRA_TEXT, event.content)
@@ -137,7 +134,7 @@ class EventFragment : Fragment() {
             binding.progress.isVisible = state.loading
             if (state.error) {
                 Snackbar.make(binding.root, R.string.error_loading, Snackbar.LENGTH_LONG)
-                    .setAction(R.string.retry_loading) { viewModel.loadPosts() }
+                    .setAction(R.string.retry_loading) { viewModel.loadEvents() }
                     .show()
             }
         }
@@ -155,7 +152,6 @@ class EventFragment : Fragment() {
         }
 
         binding.freshPosts.setOnClickListener {
-            viewModel.showAll()
             val position = (binding.list.scrollState)
             binding.list.smoothScrollToPosition(position)
             binding.freshPosts.isVisible = false

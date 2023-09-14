@@ -5,28 +5,26 @@ import android.media.MediaPlayer
 import android.net.Uri
 import android.widget.MediaController
 import android.widget.VideoView
-import androidx.lifecycle.viewModelScope
 import androidx.paging.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import ru.netology.nikjob.api.AuthApiService
+import ru.netology.nikjob.api.EventApiService
 import ru.netology.nikjob.api.MediaApiService
 import ru.netology.nikjob.api.PostsApiService
 import ru.netology.nikjob.auth.AppAuth
+import ru.netology.nikjob.dao.EventDao
 import ru.netology.nikjob.dao.PostDao
 import ru.netology.nikjob.dao.PostRemoteKeyDao
 import ru.netology.nikjob.db.AppDb
 import ru.netology.nikjob.dto.*
 import ru.netology.nikjob.entity.*
 import ru.netology.nikjob.enumeration.AttachmentType
-import ru.netology.nikjob.error.ApiError
-import ru.netology.nikjob.error.AppError
-import ru.netology.nikjob.error.NetworkError
+import ru.netology.nikjob.error.*
 import ru.netology.nikjob.model.PhotoModel
 import java.io.IOException
 import javax.inject.Inject
@@ -36,9 +34,11 @@ import kotlin.random.Random
 @Singleton
 class PostRepositoryImpl @Inject constructor(
     private val postDao: PostDao,
+    private val eventDao: EventDao,
     private val apiService: PostsApiService,
     private val authApiService: AuthApiService,
     private val mediaApiService: MediaApiService,
+    private val eventApiService: EventApiService,
     postRemoteKeyDao: PostRemoteKeyDao,
     appDb: AppDb,
 ) : PostRepository {
@@ -74,7 +74,7 @@ class PostRepositoryImpl @Inject constructor(
             delay(10_000L)
             val response = apiService.getNewer(id)
             if (!response.isSuccessful) {
-                throw ApiError(response.code(), response.message())
+                throw ApiError(response.message())
             }
             val posts = response.body().orEmpty()
             postDao.insert(posts.toEntity().map {
@@ -114,7 +114,7 @@ class PostRepositoryImpl @Inject constructor(
 
 
     override suspend fun repostById(id: Long) {
-        TODO("Not yet implemented")
+
     }
 
 
@@ -145,6 +145,25 @@ class PostRepositoryImpl @Inject constructor(
             postDao.insert(PostEntity.fromDto(body))
         } catch (e: IOException) {
             throw NetworkError
+        }
+    }
+
+    override suspend fun saveEventWithAttachment(event: Event, photoModel: PhotoModel) {
+        try {
+            val media = upload(photoModel)
+
+            val eventWithAttachment = event.copy(attachment =
+            Attachment(media.id, AttachmentType.IMAGE
+            ))
+
+            saveEvents(eventWithAttachment)
+
+        } catch (e: AppError) {
+            throw e
+        } catch (e: IOException) {
+            throw NetworkError
+        } catch (e: Exception) {
+            throw UnknownError
         }
     }
 
@@ -217,6 +236,97 @@ class PostRepositoryImpl @Inject constructor(
             }
         }
     }
+
+    override suspend fun getAllEvents() {
+        try {
+            val response = eventApiService.getAllEvents()
+
+            if (!response.isSuccessful) {
+                throw ApiError(response.message())
+            }
+
+            val body = response.body() ?: throw ApiError(response.message())
+
+            eventDao.insertEvents(body.toEntity())
+
+        } catch (e: IOException) {
+            throw NetworkError
+        } catch (e: Exception) {
+            throw ru.netology.nikjob.error.UnknownError
+        }
+    }
+
+    override suspend fun saveEvents(event: Event) {
+        try {
+            val eventRequest = CreateEventRequest(
+                event.id,
+                event.content,
+                event.datetime,
+                null,
+                event.attachment,
+                event.link,
+                event.speakerIds
+            )
+
+            val response = eventApiService.saveEvents(eventRequest)
+
+            if (!response.isSuccessful) {
+                throw ApiError(response.message())
+            }
+
+            val eventReact = response.body() ?: throw ApiError(response.message())
+
+            eventDao.saveEvent(EventsEntity.fromDto(eventReact))
+
+        } catch (e: IOException) {
+            throw NetworkError
+        } catch (e: Exception) {
+            throw UnknownError
+        }
+    }
+
+
+    override suspend fun removeEventsById(id: Long) {
+        try {
+            val response = eventApiService.removeByIdEvent(id)
+
+            if (!response.isSuccessful) {
+                throw ApiError(response.message())
+            }
+
+            eventDao.removeByIdEvent(id)
+
+        } catch (e: IOException) {
+            throw NetworkError
+        } catch (e: Exception) {
+            throw UnknownError
+        }
+    }
+
+    override suspend fun likeByIdEvents(event: Event) {
+        eventDao.likeByIdEvent(event.id)
+        try {
+            val response = if (event.likedByMe) {
+                eventApiService.dislikeByIdEvent(event.id)
+            } else {
+                eventApiService.likeByIdEvent(event.id)
+            }
+
+            if (!response.isSuccessful) {
+                throw ApiError(response.message())
+            }
+
+            val body = response.body() ?: throw ApiError(response.message())
+
+            eventDao.insertEvents(EventsEntity.fromDto(body))
+
+        } catch (e: IOException) {
+            throw NetworkError
+        } catch (e: Exception) {
+            throw UnknownError
+        }
+    }
+
 
 }
 

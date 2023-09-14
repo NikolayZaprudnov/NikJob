@@ -11,6 +11,7 @@ import ru.netology.nikjob.R
 import ru.netology.nikjob.databinding.PostCardBinding
 import ru.netology.nikjob.dto.Event
 import ru.netology.nikjob.dto.FeedItem
+import ru.netology.nikjob.dto.Post
 import ru.netology.nikjob.viewmodel.EventViewHolder
 
 interface EventOnInteractionListener {
@@ -42,6 +43,7 @@ class EventsAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (val event = getItem(position)) {
             is Event -> (holder as? EventViewHolder)?.bind(event)
+            is Post -> error("post item type")
             null -> error("unknown item type")
             else -> {
                 error("unknown item type")

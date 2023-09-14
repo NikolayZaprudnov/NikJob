@@ -4,10 +4,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.*
-import ru.netology.nikjob.dto.Media
-import ru.netology.nikjob.dto.Post
-import ru.netology.nikjob.dto.PushToken
-import ru.netology.nikjob.dto.User
+import ru.netology.nikjob.dto.*
 
 
 interface PostsApiService {
@@ -49,6 +46,32 @@ interface PostsApiService {
 
     @POST("users/push-tokens")
     suspend fun saveToken(@Body pushToken: PushToken): Response<Unit>
+
+
+}
+interface EventApiService {
+    @GET("events")
+    suspend fun getAllEvents(): Response<List<Event>>
+
+    @POST("events")
+    suspend fun saveEvents(
+        @Body event: CreateEventRequest
+    ): Response<Event>
+
+    @DELETE("events/{id}")
+    suspend fun removeByIdEvent(
+        @Path("id") id: Long
+    ): Response<Unit>
+
+    @POST("events/{id}/likes")
+    suspend fun likeByIdEvent(
+        @Path("id") id: Long
+    ): Response<Event>
+
+    @DELETE("events/{id}/likes")
+    suspend fun dislikeByIdEvent(
+        @Path("id") id: Long
+    ): Response<Event>
 
 
 }

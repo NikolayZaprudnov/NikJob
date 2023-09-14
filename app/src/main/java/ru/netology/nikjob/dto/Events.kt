@@ -5,7 +5,7 @@ data class Event (
     val authorId: Long,
     val author: String,
     val authorAvatar: String? = null,
-    val authorJob: String,
+    val authorJob: String? = null,
     val content: String,
     val datetime: String,
     val published: String,
@@ -21,3 +21,13 @@ data class Event (
     val ownedByMe: Boolean = false,
 
 ): FeedItem
+
+data class CreateEventRequest(
+    val id: Long,
+    val content:String,
+    val datetime:String,
+    val coords:Coordinates? = null,
+    val attachment: Attachment? = null,
+    val link:String? = null,
+    val speakerIds:List<Long>? = null
+)

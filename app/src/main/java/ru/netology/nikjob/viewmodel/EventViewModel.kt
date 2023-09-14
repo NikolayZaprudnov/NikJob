@@ -1,5 +1,6 @@
 package ru.netology.nikjob.viewmodel
 
+
 import android.media.MediaPlayer
 import android.widget.VideoView
 import androidx.lifecycle.LiveData
@@ -15,6 +16,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import ru.netology.nikjob.auth.AppAuth
+import ru.netology.nikjob.dto.Event
 import ru.netology.nikjob.dto.FeedItem
 import ru.netology.nikjob.dto.Post
 import ru.netology.nikjob.model.FeedModelState
@@ -23,19 +25,20 @@ import ru.netology.nikjob.repository.PostRepository
 import util.SingleLiveEvent
 import javax.inject.Inject
 
-private val empty = Post(
+private val empty = Event(
+
     id = 0,
     authorId = 0,
-    content = "",
     author = "",
-    likeOwnerIds = emptyList(),
-    countShared = 0,
-    mentionIds = emptyList(),
-    published = ""
-)
+    content = "",
+    datetime = "",
+    published = "",
+    type = "",
+
+    )
 
 @HiltViewModel
-class PostViewModel @Inject constructor(
+class EventViewModel @Inject constructor(
     private val repository: PostRepository,
     appAuth: AppAuth,
 ) : ViewModel() {
@@ -44,11 +47,11 @@ class PostViewModel @Inject constructor(
     val data: Flow<PagingData<FeedItem>> = appAuth.authStateFlow
         .flatMapLatest { (myId, _) ->
             cached.map { pagingData ->
-                pagingData.map { post ->
-                    if (post is Post) {
-                        post.copy(ownedByMe = post.authorId == myId)
+                pagingData.map { event ->
+                    if (event is Event) {
+                        event.copy(ownedByMe = event.authorId == myId)
                     } else {
-                        post
+                        event
                     }
                 }
             }
@@ -63,16 +66,16 @@ class PostViewModel @Inject constructor(
 
     val edited = MutableLiveData(empty)
 
-    private val _postCreated = SingleLiveEvent<Unit>()
-    val postCreated: LiveData<Unit>
-        get() = _postCreated
+    private val _eventCreated = SingleLiveEvent<Unit>()
+    val eventCreated: LiveData<Unit>
+        get() = _eventCreated
 
     init {
-        loadPosts()
+        loadEvents()
     }
 
 
-    fun loadPosts() = viewModelScope.launch {
+    fun loadEvents() = viewModelScope.launch {
         try {
             _state.value = FeedModelState(loading = true)
             repository.getAllAsynch()
@@ -82,27 +85,16 @@ class PostViewModel @Inject constructor(
         }
     }
 
-    fun likeById(id: Long) = viewModelScope.launch {
-        repository.likeById(id)
+    fun likeById(event: Event) = viewModelScope.launch {
+        repository.likeByIdEvents(event)
     }
 
-    fun showAll() = viewModelScope.launch {
-        repository.showAll()
-    }
-
-    fun unlikeById(id: Long) = viewModelScope.launch {
-        repository.unlikeById(id)
-    }
-
-    fun repostById(id: Long) = viewModelScope.launch {
-        repository.repostById(id)
-    }
 
     fun removeById(id: Long) = viewModelScope.launch {
-        repository.removeById(id)
+        repository.removeEventsById(id)
     }
 
-    fun playVideo(post: Post, videoPlayer: VideoView) = viewModelScope.launch{
+    fun playVideo(post: Post, videoPlayer: VideoView) = viewModelScope.launch {
         repository.playVideo(post, videoPlayer)
     }
 
@@ -112,13 +104,13 @@ class PostViewModel @Inject constructor(
 
 
     fun save() {
-        edited.value?.let { post ->
-            _postCreated.value = Unit
+        edited.value?.let { event ->
+            _eventCreated.value = Unit
             viewModelScope.launch {
                 try {
                     photoState.value?.let {
-                        repository.saveWithAttachment(post, it)
-                    } ?: repository.save(post)
+                        repository.saveEventWithAttachment(event, it)
+                    } ?: repository.saveEvents(event)
                     _state.value = FeedModelState()
                 } catch (e: Exception) {
                     _state.value = FeedModelState(error = true)
@@ -128,8 +120,8 @@ class PostViewModel @Inject constructor(
         edited.value = empty.copy()
     }
 
-    fun edit(post: Post) {
-        edited.value = post
+    fun edit(event: Event) {
+        edited.value = event
     }
 
     fun changeContent(content: String) {

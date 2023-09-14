@@ -48,6 +48,7 @@ android {
 dependencies {
 
     implementation 'androidx.room:room-common:2.5.2'
+    implementation 'com.google.android.gms:play-services-games-v2:17.0.0'
     def core_version = "1.12.0"
     def appcompat_version = '1.6.1'
     def mdc_version = "1.9.0"

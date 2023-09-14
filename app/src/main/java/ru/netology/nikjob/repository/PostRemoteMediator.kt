@@ -41,7 +41,7 @@ class PostRemoteMediator(
             if (!result.isSuccessful) {
                 throw HttpException(result)
             }
-            val body = result.body() ?: throw ApiError(result.code(), result.message())
+            val body = result.body() ?: throw ApiError( result.message())
             if (body.isEmpty()) return MediatorResult.Success(false)
             appDb.withTransaction {
                 when (loadType) {
