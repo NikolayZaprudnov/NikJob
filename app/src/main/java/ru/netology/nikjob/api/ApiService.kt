@@ -49,30 +49,39 @@ interface PostsApiService {
 
 
 }
+
 interface EventApiService {
     @GET("events")
     suspend fun getAllEvents(): Response<List<Event>>
 
     @POST("events")
     suspend fun saveEvents(
-        @Body event: CreateEventRequest
+        @Body event: CreateEventRequest,
     ): Response<Event>
 
     @DELETE("events/{id}")
     suspend fun removeByIdEvent(
-        @Path("id") id: Long
+        @Path("id") id: Long,
     ): Response<Unit>
 
     @POST("events/{id}/likes")
     suspend fun likeByIdEvent(
-        @Path("id") id: Long
+        @Path("id") id: Long,
     ): Response<Event>
 
     @DELETE("events/{id}/likes")
     suspend fun dislikeByIdEvent(
-        @Path("id") id: Long
+        @Path("id") id: Long,
     ): Response<Event>
 
+
+}
+
+interface JobApiService {
+    @GET("{user_id}/jobs")
+    suspend fun getJobById(
+        @Path("user_id") user_id: Long,
+    ): Response<List<Job>>
 
 }
 

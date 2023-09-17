@@ -31,4 +31,5 @@ interface PostRepository {
     suspend fun saveEventWithAttachment(event: Event, photoModel: PhotoModel)
     suspend fun removeEventsById(id: Long)
     suspend fun likeByIdEvents(event: Event)
+    suspend fun avaterClick(post: Post)
 }

@@ -25,6 +25,7 @@ interface OnInteractionListener {
     fun onPlay(post: Post, videoPlayer:VideoView, player: MediaPlayer)
     fun onOpen(post: Post)
     fun onLink(post: Post)
+    fun onAvatarClick(post: Post)
 }
 
 class PostsAdapter(

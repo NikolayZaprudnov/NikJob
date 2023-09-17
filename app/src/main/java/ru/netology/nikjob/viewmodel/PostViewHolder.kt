@@ -106,6 +106,9 @@ class PostViewHolder(
             url.setOnClickListener {
                 onInteractionListener.onLink(post)
             }
+            avatar.setOnClickListener {
+                onInteractionListener.onAvatarClick(post)
+            }
 
             menu.isVisible = post.ownedByMe
             menu.setOnClickListener {

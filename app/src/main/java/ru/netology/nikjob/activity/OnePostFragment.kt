@@ -95,6 +95,10 @@ class OnePostFragment : Fragment(
                 val linkIntent = Intent(Intent.ACTION_VIEW, Uri.parse(post.link))
                 startActivity(linkIntent)
             }
+
+            override fun onAvatarClick(post: Post) {
+                TODO("Not yet implemented")
+            }
         })
 
         binding.list.adapter = adapter

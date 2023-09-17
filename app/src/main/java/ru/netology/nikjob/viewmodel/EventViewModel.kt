@@ -78,7 +78,7 @@ class EventViewModel @Inject constructor(
     fun loadEvents() = viewModelScope.launch {
         try {
             _state.value = FeedModelState(loading = true)
-            repository.getAllAsynch()
+            repository.getAllEvents()
             _state.value = FeedModelState()
         } catch (e: Exception) {
             _state.value = FeedModelState(error = true)

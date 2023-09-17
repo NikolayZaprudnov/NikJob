@@ -252,7 +252,7 @@ class PostRepositoryImpl @Inject constructor(
         } catch (e: IOException) {
             throw NetworkError
         } catch (e: Exception) {
-            throw ru.netology.nikjob.error.UnknownError
+            throw UnknownError
         }
     }
 
@@ -325,6 +325,10 @@ class PostRepositoryImpl @Inject constructor(
         } catch (e: Exception) {
             throw UnknownError
         }
+    }
+
+    override suspend fun avaterClick(post: Post) {
+        TODO("Not yet implemented")
     }
 
 

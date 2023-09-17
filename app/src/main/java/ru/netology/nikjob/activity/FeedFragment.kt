@@ -127,6 +127,15 @@ class FeedFragment : Fragment() {
                 val linkIntent = Intent(Intent.ACTION_VIEW, Uri.parse(post.link))
                 startActivity(linkIntent)
             }
+
+            override fun onAvatarClick(post: Post) {
+                findNavController().navigate(R.id.action_feedFragment_to_userJobFragment,
+                Bundle().apply {
+                    arguments = bundleOf(
+                        "authorId" to post.id
+                    )
+                })
+            }
         })
         binding.list.adapter = adapter.withLoadStateHeaderAndFooter(
             header = PostLoadingStateAdapter {
@@ -171,6 +180,7 @@ class FeedFragment : Fragment() {
         binding.eventsNavigation.setOnClickListener {
             findNavController().navigate(R.id.action_feedFragment_to_eventFragment2)
         }
+
 
 
         viewModel.edited.observe(viewLifecycleOwner) { post ->
