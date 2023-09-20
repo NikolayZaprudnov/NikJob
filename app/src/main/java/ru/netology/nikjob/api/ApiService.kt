@@ -83,6 +83,17 @@ interface JobApiService {
         @Path("user_id") user_id: Long,
     ): Response<List<Job>>
 
+    @DELETE("my/jobs/{id}")
+    suspend fun removeJobById(
+        @Path("id") id: Long
+    ): Response<Unit>
+
+    @POST("my/jobs")
+    suspend fun createJob(
+        @Body job: Job
+    ): Response<Job>
+
+
 }
 
 interface MediaApiService {

@@ -39,4 +39,15 @@
         android:textColor="#0000ff"
         app:layout_constraintTop_toBottomOf="@id/start"/>
 
+    <Button
+        android:id="@+id/removeJob"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/jobLink"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/remove"
+        android:layout_margin="16dp"/>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

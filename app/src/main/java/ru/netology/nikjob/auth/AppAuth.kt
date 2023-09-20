@@ -89,21 +89,6 @@ class AppAuth @Inject constructor(
         const val ID = "id"
         const val TOKEN = "token"
 
-//        @Volatile
-//        private var INSTANCE: AppAuth? = null
-//
-//        fun init(context: Context) {
-//            synchronized(this) {
-//                INSTANCE = AppAuth(context)
-//            }
-//        }
-//
-//        fun getInstance(): AppAuth {
-//            return synchronized(this) {
-//                requireNotNull(INSTANCE)
-//            }
-//        }
-
     }
 
 }

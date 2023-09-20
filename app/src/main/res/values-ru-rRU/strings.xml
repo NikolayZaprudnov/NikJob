@@ -30,4 +30,11 @@
     <string name="repeat_password">Повторите Пароль</string>
     <string name="registration">Зарегистрироваться</string>
     <string name="fields_do_not_match">Не совпадает поле "Пароль" и "Повторите пароль"</string>
+    <string name="position">Позиция</string>
+    <string name="start_work">Начало работы</string>
+    <string name="finish_work">Конец работы</string>
+    <string name="link">Ссылка</string>
+    <string name="are_you_sure">Вы уверены?</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
 </resources>

@@ -75,22 +75,5 @@
             android:layout_height="wrap_content" />
     </LinearLayout>
 
-    <!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-    <!--        android:id="@+id/ok"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:contentDescription="@string/description_post_save"-->
-    <!--        app:layout_anchor="@id/bottomAppBar"-->
-    <!--        app:srcCompat="@drawable/ic_baseline_ok_24" />-->
-
-    <!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-    <!--        android:id="@+id/not"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:contentDescription="@string/description_post_save"-->
-    <!--        android:visibility="gone"-->
-    <!--        app:layout_anchor="@id/bottomAppBar"-->
-    <!--        app:srcCompat="@android:drawable/ic_delete" />-->
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

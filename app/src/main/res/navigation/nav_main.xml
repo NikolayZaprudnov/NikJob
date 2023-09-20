@@ -81,5 +81,13 @@
     <fragment
         android:id="@+id/userJobFragment"
         android:name="ru.netology.nikjob.activity.UserJobFragment"
-        android:label="UserJobFragment" />
+        android:label="UserJobFragment" >
+        <action
+            android:id="@+id/action_userJobFragment_to_newJobFragment"
+            app:destination="@id/newJobFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/newJobFragment"
+        android:name="ru.netology.nikjob.activity.NewJobFragment"
+        android:label="NewJobFragment" />
 </navigation>

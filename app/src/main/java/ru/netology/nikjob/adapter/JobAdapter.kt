@@ -11,6 +11,7 @@ import ru.netology.nikjob.viewmodel.UserJobViewHolder
 
 interface OnJobInteractionListener{
     fun onLink(job: Job){}
+    fun onDelete(job: Job)
 }
 
 class JobAdapter(

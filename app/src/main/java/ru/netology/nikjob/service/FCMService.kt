@@ -49,16 +49,7 @@ class FCMService : FirebaseMessagingService() {
             appAuth.sendPushToken()
         }
 
-//        message.data[action]?.let {
-//            if (it == "LIKE" || it == "POST") {
-//                when (Action.valueOf(it)) {
-//                    Action.LIKE -> handleLike(gson.fromJson(message.data[content],
-//                        Like::class.java))
-//                    Action.POST -> handlePost(gson.fromJson(message.data[content],
-//                        Post::class.java))
-//                }
-//            } else {  handleExeption(gson.fromJson(message.data[content], Error::class.java)) }
-//        }
+
     }
 
 
@@ -80,53 +71,7 @@ class FCMService : FirebaseMessagingService() {
             .notify(Random.nextInt(100_000), notification)
     }
 
-//    private fun handleLike(content: Like) {
-//        val notification = NotificationCompat.Builder(this, channelId)
-//            .setSmallIcon(R.drawable.ic_notification)
-//            .setContentTitle(
-//                getString(
-//                    R.string.notification_user_liked,
-//                    content.userName,
-//                    content.postAuthor,
-//                )
-//            )
-//            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-//            .build()
-//
-//        NotificationManagerCompat.from(this)
-//            .notify(Random.nextInt(100_000), notification)
-//    }
-//
-//    private fun handleExeption(content: Error) {
-//        val notification = NotificationCompat.Builder(this, channelId)
-//            .setSmallIcon(R.drawable.ic_notification)
-//            .setContentTitle(
-//                getString(R.string.notification_error)
-//            )
-//            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-//            .build()
-//
-//        NotificationManagerCompat.from(this)
-//            .notify(Random.nextInt(100_000), notification)
-//    }
-//
-//    private fun handlePost(content: Post) {
-//        val notification = NotificationCompat.Builder(this, channelId)
-//            .setSmallIcon(R.drawable.ic_notification)
-//            .setContentTitle(
-//                getString(
-//                    R.string.notification_new_post,
-//                    content.postAuthor,
-//                )
-//            )
-//            .setStyle(NotificationCompat.BigTextStyle()
-//                .bigText(content.postContent))
-//            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-//            .build()
-//
-//        NotificationManagerCompat.from(this)
-//            .notify(Random.nextInt(100_000), notification)
-//    }
+
 }
 
 enum class Action {
