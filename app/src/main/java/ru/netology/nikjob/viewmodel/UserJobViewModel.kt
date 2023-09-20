@@ -14,7 +14,6 @@ class UserJobViewModel(
 ) : ViewModel() {
     var jobs = MutableLiveData<List<Job>>()
 
-
     fun loadJobData(userId: Long) {
         viewModelScope.launch {
             val response = jobApiService.getJobById(userId)

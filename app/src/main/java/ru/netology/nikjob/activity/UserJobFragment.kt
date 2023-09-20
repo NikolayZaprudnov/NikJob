@@ -14,13 +14,17 @@ import ru.netology.nikjob.R
 import ru.netology.nikjob.adapter.JobAdapter
 import ru.netology.nikjob.adapter.OnJobInteractionListener
 import ru.netology.nikjob.databinding.FragmentUserJobBinding
+import ru.netology.nikjob.dialog.removeJobDialog
 import ru.netology.nikjob.dto.Job
 import ru.netology.nikjob.viewmodel.AuthViewModel
 import ru.netology.nikjob.viewmodel.UserJobViewModel
 
-class UserJobFragment : Fragment() {
+class UserJobFragment : Fragment(), removeJobDialog.DialogListener {
     private val viewModel: UserJobViewModel by activityViewModels()
     private val authViewModel: AuthViewModel by activityViewModels()
+    val dialog = removeJobDialog()
+    val manager = parentFragmentManager
+    var deleteOrNot: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,6 +36,7 @@ class UserJobFragment : Fragment() {
             container,
             false
         )
+
         val adapter = JobAdapter(object : OnJobInteractionListener {
             override fun onLink(job: Job) {
                 val linkIntent = Intent(Intent.ACTION_VIEW, Uri.parse(job.link))
@@ -39,7 +44,11 @@ class UserJobFragment : Fragment() {
             }
 
             override fun onDelete(job: Job) {
-                viewModel.deleteJob(job.id)
+                dialog.show(manager, "")
+                if (deleteOrNot == true) {
+                    viewModel.deleteJob(job.id)
+                    deleteOrNot = false
+                }
             }
         })
 
@@ -54,6 +63,10 @@ class UserJobFragment : Fragment() {
             findNavController().navigate(R.id.action_userJobFragment_to_newJobFragment)
         }
         return binding.root
+    }
+
+    override fun ODialogPositiveClick(data: Boolean) {
+        deleteOrNot = true
     }
 
 }

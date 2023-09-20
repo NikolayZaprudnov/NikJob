@@ -14,7 +14,7 @@ class UserJobViewHolder(
     private val binding: JobCardBinding,
     private val onJobInteractionListener: OnJobInteractionListener
 ) : RecyclerView.ViewHolder(binding.root){
-    val dialog = removeJobDialog()
+
     fun bind(job: Job){
         binding.apply {
             nameJob.text = job.name
