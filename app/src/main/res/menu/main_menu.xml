@@ -4,6 +4,7 @@
 
     <group android:id="@+id/authorized">
 
+
         <item
             android:id="@+id/signOut"
             android:title="@string/sign_out"

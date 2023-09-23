@@ -10,7 +10,7 @@ data class Event (
     val datetime: String,
     val published: String,
     val coords: Coordinates? = null,
-    val type: String,
+    val types: String?,
     val likeOwnerIds : List<Long>? = emptyList(),
     val likedByMe: Boolean = false,
     val speakerIds: List<Long>? = emptyList(),
@@ -20,13 +20,14 @@ data class Event (
     val link: String? = null,
     val ownedByMe: Boolean = false,
 
-): FeedItem
+    ): FeedItem
 
 data class CreateEventRequest(
     val id: Long,
     val content:String,
     val datetime:String,
     val coords:Coordinates? = null,
+    val type:String? = null,
     val attachment: Attachment? = null,
     val link:String? = null,
     val speakerIds:List<Long>? = null

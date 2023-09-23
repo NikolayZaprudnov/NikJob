@@ -124,17 +124,22 @@ class FeedFragment : Fragment() {
             }
 
             override fun onLink(post: Post) {
-                val linkIntent = Intent(Intent.ACTION_VIEW, Uri.parse(post.link))
-                startActivity(linkIntent)
+                val uriPost = "https://" + post.link
+                try {
+                    val linkIntent = Intent(Intent.ACTION_VIEW, Uri.parse(uriPost))
+                    startActivity(linkIntent)
+                } catch (e: Exception){ }
+
             }
 
             override fun onAvatarClick(post: Post) {
+                var bundle = Bundle()
+                bundle.putString("authorAvatar", post.authorAvatar)
+                bundle.putString("authorName", post.author)
+                bundle.putLong("authorId", post.authorId)
+                bundle.putLong("userId", appAuth.authStateFlow.value.id)
                 findNavController().navigate(R.id.action_feedFragment_to_userJobFragment,
-                Bundle().apply {
-                    arguments = bundleOf(
-                        "authorId" to post.id
-                    )
-                })
+               bundle)
             }
         })
         binding.list.adapter = adapter.withLoadStateHeaderAndFooter(

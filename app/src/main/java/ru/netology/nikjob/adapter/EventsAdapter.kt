@@ -8,7 +8,8 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import ru.netology.nikjob.R
-import ru.netology.nikjob.databinding.PostCardBinding
+import ru.netology.nikjob.databinding.EventCardBinding
+import ru.netology.nikjob.dto.Ad
 import ru.netology.nikjob.dto.Event
 import ru.netology.nikjob.dto.FeedItem
 import ru.netology.nikjob.dto.Post
@@ -35,7 +36,7 @@ class EventsAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val binding =
-            PostCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            EventCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return EventViewHolder(binding, eventOnInteractionListener)
 
     }
@@ -44,6 +45,7 @@ class EventsAdapter(
         when (val event = getItem(position)) {
             is Event -> (holder as? EventViewHolder)?.bind(event)
             is Post -> error("post item type")
+            is Ad -> R.layout.card_ad
             null -> error("unknown item type")
             else -> {
                 error("unknown item type")

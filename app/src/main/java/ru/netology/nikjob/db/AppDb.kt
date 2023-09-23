@@ -5,15 +5,21 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import ru.netology.nikjob.dao.EventDao
+import ru.netology.nikjob.dao.EventRemoteKeyDao
 import ru.netology.nikjob.dao.PostDao
 import ru.netology.nikjob.dao.PostRemoteKeyDao
+import ru.netology.nikjob.entity.EventRemoteKeyEntity
+import ru.netology.nikjob.entity.EventsEntity
 import ru.netology.nikjob.entity.PostEntity
 import ru.netology.nikjob.entity.PostRemoteKeyEntity
 
-@Database(entities = [PostEntity::class, PostRemoteKeyEntity::class], version = 1)
+@Database(entities = [PostEntity::class, PostRemoteKeyEntity::class, EventsEntity::class, EventRemoteKeyEntity::class], version = 1)
 abstract class AppDb : RoomDatabase() {
     abstract fun postDao(): PostDao
     abstract fun postRemoteKeyDao(): PostRemoteKeyDao
+    abstract fun eventDao(): EventDao
+    abstract fun eventRemoteKeyDao(): EventRemoteKeyDao
 
 
     class DbHelper(

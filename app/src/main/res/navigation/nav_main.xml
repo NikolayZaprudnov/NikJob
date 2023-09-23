@@ -61,6 +61,15 @@
         <action
             android:id="@+id/action_onePostFragment_to_editPostFragment"
             app:destination="@id/editPostFragment" />
+        <action
+            android:id="@+id/action_onePostFragment_to_imageFragment"
+            app:destination="@id/imageFragment" />
+        <action
+            android:id="@+id/action_onePostFragment_to_registrationFragment"
+            app:destination="@id/registrationFragment" />
+        <action
+            android:id="@+id/action_onePostFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
     </fragment>
     <fragment
         android:id="@+id/imageFragment"
@@ -77,7 +86,23 @@
     <fragment
         android:id="@+id/eventFragment"
         android:name="ru.netology.nikjob.activity.EventFragment"
-        android:label="EventFragment" />
+        android:label="EventFragment" >
+        <action
+            android:id="@+id/action_eventFragment_to_imageFragment"
+            app:destination="@id/imageFragment" />
+        <action
+            android:id="@+id/action_eventFragment_to_registrationFragment"
+            app:destination="@id/registrationFragment" />
+        <action
+            android:id="@+id/action_eventFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+        <action
+            android:id="@+id/action_eventFragment_to_newEventFragment"
+            app:destination="@id/newEventFragment" />
+        <action
+            android:id="@+id/action_eventFragment_self"
+            app:destination="@id/eventFragment" />
+    </fragment>
     <fragment
         android:id="@+id/userJobFragment"
         android:name="ru.netology.nikjob.activity.UserJobFragment"
@@ -90,4 +115,8 @@
         android:id="@+id/newJobFragment"
         android:name="ru.netology.nikjob.activity.NewJobFragment"
         android:label="NewJobFragment" />
+    <fragment
+        android:id="@+id/newEventFragment"
+        android:name="ru.netology.nikjob.activity.NewEventFragment"
+        android:label="NewEventFragment" />
 </navigation>

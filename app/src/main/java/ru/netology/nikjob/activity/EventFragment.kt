@@ -92,11 +92,11 @@ class EventFragment : Fragment() {
             }
 
             override fun onEdit(event: Event) {
-//                viewModel.edit(event)
+                viewModel.edit(event)
             }
 
             override fun onOpenImage(event: Event) {
-                findNavController().navigate(R.id.action_feedFragment_to_imageFragment,
+                findNavController().navigate(R.id.action_eventFragment_to_imageFragment,
                     Bundle().apply {
                         textArg = event.attachment?.url
                     })
@@ -105,10 +105,10 @@ class EventFragment : Fragment() {
             override fun onPlay(event: Event, videoPlayer: VideoView, player: MediaPlayer) {
                 when (event.attachment?.type) {
                     AttachmentType.VIDEO -> {
-//                        viewModel.playVideo(event, videoPlayer)
+                        viewModel.playVideo(event, videoPlayer)
                     }
                     AttachmentType.AUDIO -> {
-//                        viewModel.playAudio(event, player)
+                        viewModel.playAudio(event, player)
                     }
                     else -> {
                         Toast.makeText(requireContext(), "Invalid data type", Toast.LENGTH_LONG)
@@ -163,22 +163,23 @@ class EventFragment : Fragment() {
         }
 
 
-        viewModel.edited.observe(viewLifecycleOwner) { post ->
-            if (post.id == 0L) {
+
+        viewModel.edited.observe(viewLifecycleOwner) { event ->
+            if (event.id == 0L) {
                 return@observe
             }
             findNavController().navigate(R.id.action_feedFragment_to_editPostFragment,
                 Bundle().apply {
-                    textArg = post.content
+                    textArg = event.content
                     arguments = bundleOf(
-                        "authorId" to post.author,
-                        "content" to post.content
+                        "authorId" to event.author,
+                        "content" to event.content
                     )
                 })
         }
         val draftText = arguments?.textArg.toString()
         binding.newpost.setOnClickListener {
-            findNavController().navigate(R.id.action_feedFragment_to_newPostFragment)
+            findNavController().navigate(R.id.action_eventFragment_to_newEventFragment)
             Bundle().apply {
                 textArg = draftText
             }
@@ -209,12 +210,12 @@ class EventFragment : Fragment() {
                             }
 
                             R.id.signIn -> {
-                                findNavController().navigate(R.id.action_feedFragment_to_signInFragment)
+                                findNavController().navigate(R.id.action_eventFragment_to_signInFragment)
                                 true
                             }
 
                             R.id.signUp -> {
-                                findNavController().navigate(R.id.action_feedFragment_to_registrationFragment)
+                                findNavController().navigate(R.id.action_eventFragment_to_registrationFragment)
                                 true
                             }
 

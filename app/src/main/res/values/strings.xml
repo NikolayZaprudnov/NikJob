@@ -48,5 +48,10 @@
     <string name="are_you_sure">Are you sure?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="events">Events</string>
+    <string name="cant_remote_job">You can only delete your own works</string>
+    <string name="profile">profile</string>
+    <string name="date_time">Date time</string>
+    <string name="description">Description</string>
     />
 </resources>

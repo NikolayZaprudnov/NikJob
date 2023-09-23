@@ -18,6 +18,7 @@ import ru.netology.nikjob.api.MediaApiService
 import ru.netology.nikjob.api.PostsApiService
 import ru.netology.nikjob.auth.AppAuth
 import ru.netology.nikjob.dao.EventDao
+import ru.netology.nikjob.dao.EventRemoteKeyDao
 import ru.netology.nikjob.dao.PostDao
 import ru.netology.nikjob.dao.PostRemoteKeyDao
 import ru.netology.nikjob.db.AppDb
@@ -40,6 +41,7 @@ class PostRepositoryImpl @Inject constructor(
     private val mediaApiService: MediaApiService,
     private val eventApiService: EventApiService,
     postRemoteKeyDao: PostRemoteKeyDao,
+    eventRemoteKeyDao: EventRemoteKeyDao,
     appDb: AppDb,
 ) : PostRepository {
 
@@ -53,19 +55,45 @@ class PostRepositoryImpl @Inject constructor(
         pagingSourceFactory = {
             postDao.getPagingSourse()
         },
-        remoteMediator = PostRemoteMediator(apiService = apiService,
+        remoteMediator = PostRemoteMediator(
+            apiService = apiService,
             postDao = postDao,
             postRemoteKeyDao = postRemoteKeyDao,
-            appDb = appDb,)
+            appDb = appDb,
+        )
     ).flow
         .map {
             it.map(PostEntity::toDto)
-                .insertSeparators { previos, _  ->
-                    if (previos?.id?.rem(5) == 0L){
+                .insertSeparators { previos, _ ->
+                    if (previos?.id?.rem(5) == 0L) {
                         Ad(Random.nextLong(), "figma.jpg")
-                    }else{
+                    } else {
                         null
+                    }
                 }
+        }
+
+    @OptIn(ExperimentalPagingApi::class)
+    override val dataEvents: Flow<PagingData<FeedItem>> = Pager(
+        config = PagingConfig(pageSize = 10, enablePlaceholders = false),
+        pagingSourceFactory = {
+            eventDao.getPagingSourse()
+        },
+        remoteMediator = EventRemoteMediator(
+            apiService = eventApiService,
+            eventDao = eventDao,
+            eventRemoteKeyDao = eventRemoteKeyDao,
+            appDb = appDb,
+        )
+    ).flow
+        .map {
+            it.map(EventsEntity::toDto)
+                .insertSeparators { previos, _ ->
+                    if (previos?.id?.rem(5) == 0L) {
+                        Ad(Random.nextLong(), "figma.jpg")
+                    } else {
+                        null
+                    }
                 }
         }
 
@@ -110,7 +138,6 @@ class PostRepositoryImpl @Inject constructor(
             postDao.likeById(id)
         };
     }
-
 
 
     override suspend fun repostById(id: Long) {
@@ -213,16 +240,19 @@ class PostRepositoryImpl @Inject constructor(
         val response = apiService.removeById(id)
         if (response.isSuccessful) {
             postDao.removeById(id)
-        }; throw RuntimeException("API SERVICE ERROR")
+        } else {
+            throw RuntimeException("API SERVICE ERROR")
+        }
     }
+
     override suspend fun playVideo(post: Post, videoPlayer: VideoView) {
-                videoPlayer.apply {
-                    setMediaController(MediaController(context))
-                    setVideoURI(Uri.parse(post.attachment?.url))
-                    setOnPreparedListener { start() }
-                    setOnCompletionListener { stopPlayback() }
-                }
-            }
+        videoPlayer.apply {
+            setMediaController(MediaController(context))
+            setVideoURI(Uri.parse(post.attachment?.url))
+            setOnPreparedListener { start() }
+            setOnCompletionListener { stopPlayback() }
+        }
+    }
 
     override suspend fun playAudio(post: Post, player: MediaPlayer) {
         player.apply {
@@ -236,6 +266,7 @@ class PostRepositoryImpl @Inject constructor(
             }
         }
     }
+
 
     override suspend fun getAllEvents() {
         try {
@@ -263,12 +294,32 @@ class PostRepositoryImpl @Inject constructor(
                 event.content,
                 event.datetime,
                 null,
+                null,
                 event.attachment,
                 event.link,
                 event.speakerIds
             )
 
             val response = eventApiService.saveEvents(eventRequest)
+
+            if (!response.isSuccessful) {
+                throw ApiError(response.message())
+            }
+
+            val eventReact = response.body() ?: throw ApiError(response.message())
+
+            eventDao.saveEvent(EventsEntity.fromDto(eventReact))
+
+        } catch (e: IOException) {
+            throw NetworkError
+        } catch (e: Exception) {
+            throw UnknownError
+        }
+    }
+
+    override suspend fun saveNewEvents(event: CreateEventRequest) {
+        try {
+            val response = eventApiService.saveEvents(event)
 
             if (!response.isSuccessful) {
                 throw ApiError(response.message())
@@ -329,6 +380,28 @@ class PostRepositoryImpl @Inject constructor(
 
     override suspend fun avaterClick(post: Post) {
         TODO("Not yet implemented")
+    }
+
+    override suspend fun playVideoEvent(event: Event, videoPlayer: VideoView) {
+        videoPlayer.apply {
+            setMediaController(MediaController(context))
+            setVideoURI(Uri.parse(event.attachment?.url))
+            setOnPreparedListener { start() }
+            setOnCompletionListener { stopPlayback() }
+        }
+    }
+
+    override suspend fun playAudioEvent(event: Event, player: MediaPlayer) {
+        player.apply {
+            if (isPlaying) {
+                pause()
+            } else {
+                reset()
+                setDataSource(event.attachment?.url)
+                prepare()
+                start()
+            }
+        }
     }
 
 

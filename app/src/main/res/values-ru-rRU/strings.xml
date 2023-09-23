@@ -37,4 +37,9 @@
     <string name="are_you_sure">Вы уверены?</string>
     <string name="yes">Да</string>
     <string name="no">Нет</string>
+    <string name="events">События</string>
+    <string name="cant_remote_job">Вы можете удалять только свои работы</string>
+    <string name="profile">Профиль</string>
+    <string name="date_time">Дата и время</string>
+    <string name="description">Описание</string>
 </resources>

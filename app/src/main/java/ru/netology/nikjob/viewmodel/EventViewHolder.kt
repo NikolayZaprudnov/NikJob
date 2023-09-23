@@ -11,12 +11,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import ru.netology.nikjob.R
 import ru.netology.nikjob.adapter.EventOnInteractionListener
-import ru.netology.nikjob.databinding.PostCardBinding
+import ru.netology.nikjob.databinding.EventCardBinding
 import ru.netology.nikjob.dto.Event
 import ru.netology.nikjob.enumeration.AttachmentType
 
 class EventViewHolder(
-    private val binding: PostCardBinding,
+    private val binding: EventCardBinding,
     private val eventOnInteractionListener: EventOnInteractionListener,
     ) : RecyclerView.ViewHolder(binding.root) {
     private val player = MediaPlayer()
@@ -30,8 +30,9 @@ class EventViewHolder(
                 .error(R.drawable.ic_baseline_error_100)
                 .timeout(10_000)
                 .into(avatar)
-            time.text = post.published.toString()
+            time.text = post.published
             content.text = post.content
+            dateTime.text = post.datetime
             likes.isChecked = post.likedByMe
             likes.text = converter(post.likeOwnerIds!!.size)
             if (post.link != null) {

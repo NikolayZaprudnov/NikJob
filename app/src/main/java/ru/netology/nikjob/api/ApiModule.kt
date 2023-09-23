@@ -77,4 +77,16 @@ ApiModule {
     fun provideAuthApiService(
         retrofit: Retrofit,
     ): AuthApiService = retrofit.create()
+
+    @Singleton
+    @Provides
+    fun provideEventApiService(
+        retrofit: Retrofit,
+    ): EventApiService = retrofit.create()
+
+    @Singleton
+    @Provides
+    fun providejOBApiService(
+        retrofit: Retrofit,
+    ): JobApiService = retrofit.create()
 }

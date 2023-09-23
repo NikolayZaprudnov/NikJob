@@ -74,6 +74,19 @@ interface EventApiService {
         @Path("id") id: Long,
     ): Response<Event>
 
+    @GET("events/latest")
+    suspend fun getLatest(@Query("count") count: Int): Response<List<Event>>
+
+    @GET("events/{id}/before")
+    suspend fun getBefore(
+        @Path("id") id: Long,
+        @Query("count") count: Int,
+    ): Response<List<Event>>
+
+    @GET("events/{id}/after")
+    suspend fun getAfter(@Path("id") id: Long, @Query("count") count: Int): Response<List<Event>>
+
+
 
 }
 
@@ -81,6 +94,10 @@ interface JobApiService {
     @GET("{user_id}/jobs")
     suspend fun getJobById(
         @Path("user_id") user_id: Long,
+    ): Response<List<Job>>
+
+    @GET("my/jobs")
+    suspend fun getMyJobs(
     ): Response<List<Job>>
 
     @DELETE("my/jobs/{id}")

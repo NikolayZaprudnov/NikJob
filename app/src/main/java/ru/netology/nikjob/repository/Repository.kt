@@ -5,6 +5,7 @@ import android.media.MediaPlayer
 import android.widget.VideoView
 import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
+import ru.netology.nikjob.dto.CreateEventRequest
 import ru.netology.nikjob.dto.Event
 import ru.netology.nikjob.dto.FeedItem
 import ru.netology.nikjob.dto.Post
@@ -12,6 +13,7 @@ import ru.netology.nikjob.model.PhotoModel
 
 interface PostRepository {
     val data: Flow<PagingData<FeedItem>>
+    val dataEvents: Flow<PagingData<FeedItem>>
     fun getNewer(id: Long): Flow<Int>
     suspend fun likeById(id: Long)
     suspend fun repostById(id: Long)
@@ -28,8 +30,11 @@ interface PostRepository {
     suspend fun playAudio(post: Post, player: MediaPlayer)
     suspend fun getAllEvents()
     suspend fun saveEvents(event: Event)
+    suspend fun saveNewEvents(event: CreateEventRequest)
     suspend fun saveEventWithAttachment(event: Event, photoModel: PhotoModel)
     suspend fun removeEventsById(id: Long)
     suspend fun likeByIdEvents(event: Event)
     suspend fun avaterClick(post: Post)
+    suspend fun playVideoEvent(event: Event, videoPlayer: VideoView)
+    suspend fun playAudioEvent(event: Event, player: MediaPlayer)
 }
