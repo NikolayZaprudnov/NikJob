@@ -21,8 +21,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="start|top"
+                android:layout_margin="16dp"
+                android:background="@drawable/edit_text_style"
+                android:hint="@string/description"
+                android:padding="16dp"
                 android:inputType="textMultiLine"
-                android:background="@android:color/transparent" />
+                />
 
             <FrameLayout
                 android:id="@+id/photoContainer"

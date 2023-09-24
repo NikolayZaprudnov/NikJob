@@ -64,6 +64,7 @@ class NewJobFragment : Fragment() {
                 date = datePicker.selection
                 timePicker.show(manager, "")
             }
+            datePicker.show(manager, "")
         }
 
 
@@ -90,6 +91,7 @@ class NewJobFragment : Fragment() {
                 date = datePicker.selection
                 timePicker.show(manager, "")
             }
+            datePicker.show(manager, "")
         }
         binding.newpost.setOnClickListener {
             val newJob = Job(

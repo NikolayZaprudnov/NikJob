@@ -20,7 +20,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import ru.netology.nikjob.R
 import ru.netology.nikjob.activity.NewPostFragment.Companion.textArg
-import ru.netology.nikjob.adapter.*
+import ru.netology.nikjob.adapter.EventOnInteractionListener
+import ru.netology.nikjob.adapter.EventsAdapter
+import ru.netology.nikjob.adapter.PostLoadingStateAdapter
 import ru.netology.nikjob.auth.AppAuth
 import ru.netology.nikjob.databinding.FragmentEventBinding
 import ru.netology.nikjob.dialog.CheckRegistrationDialog
@@ -80,7 +82,7 @@ class EventFragment : Fragment() {
             }
 
             override fun onOpen(event: Event) {
-                findNavController().navigate(R.id.action_feedFragment_to_onePostFragment,
+                findNavController().navigate(R.id.action_eventFragment_to_oneEventFragment,
                     Bundle().apply {
                         val idArg = putLong("id", event.id)
                     })
@@ -118,8 +120,12 @@ class EventFragment : Fragment() {
             }
 
             override fun onLink(event: Event) {
-                val linkIntent = Intent(Intent.ACTION_VIEW, Uri.parse(event.link))
-                startActivity(linkIntent)
+                val uriPost = "https://" + event.link
+                try {
+                    val linkIntent = Intent(Intent.ACTION_VIEW, Uri.parse(uriPost))
+                    startActivity(linkIntent)
+                } catch (e: Exception) {
+                }
             }
         })
         binding.list.adapter = adapter.withLoadStateHeaderAndFooter(
@@ -168,7 +174,7 @@ class EventFragment : Fragment() {
             if (event.id == 0L) {
                 return@observe
             }
-            findNavController().navigate(R.id.action_feedFragment_to_editPostFragment,
+            findNavController().navigate(R.id.action_eventFragment_to_editEventFragment,
                 Bundle().apply {
                     textArg = event.content
                     arguments = bundleOf(
@@ -179,9 +185,13 @@ class EventFragment : Fragment() {
         }
         val draftText = arguments?.textArg.toString()
         binding.newpost.setOnClickListener {
-            findNavController().navigate(R.id.action_eventFragment_to_newEventFragment)
-            Bundle().apply {
-                textArg = draftText
+            if (!authViewModel.authorized) {
+                dialog.show(manager, "")
+            } else {
+                findNavController().navigate(R.id.action_eventFragment_to_newEventFragment)
+                Bundle().apply {
+                    textArg = draftText
+                }
             }
         }
 

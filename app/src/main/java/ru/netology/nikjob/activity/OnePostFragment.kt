@@ -18,16 +18,20 @@ import ru.netology.nikjob.R
 import ru.netology.nikjob.activity.NewPostFragment.Companion.textArg
 import ru.netology.nikjob.adapter.OnInteractionListener
 import ru.netology.nikjob.adapter.PostsAdapter
+import ru.netology.nikjob.auth.AppAuth
 import ru.netology.nikjob.databinding.FragmentOnePostBinding
 import ru.netology.nikjob.dto.Post
 import ru.netology.nikjob.enumeration.AttachmentType
 import ru.netology.nikjob.viewmodel.PostViewModel
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class OnePostFragment : Fragment(
 ) {
 
     private val viewModel: PostViewModel by activityViewModels()
+    @Inject
+    lateinit var appAuth: AppAuth
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -92,12 +96,21 @@ class OnePostFragment : Fragment(
             }
 
             override fun onLink(post: Post) {
-                val linkIntent = Intent(Intent.ACTION_VIEW, Uri.parse(post.link))
-                startActivity(linkIntent)
+                val uriPost = "https://" + post.link
+                try {
+                    val linkIntent = Intent(Intent.ACTION_VIEW, Uri.parse(uriPost))
+                    startActivity(linkIntent)
+                } catch (e: Exception){ }
             }
 
             override fun onAvatarClick(post: Post) {
-                TODO("Not yet implemented")
+                var bundle = Bundle()
+                bundle.putString("authorAvatar", post.authorAvatar)
+                bundle.putString("authorName", post.author)
+                bundle.putLong("authorId", post.authorId)
+                bundle.putLong("userId", appAuth.authStateFlow.value.id)
+                findNavController().navigate(R.id.action_feedFragment_to_userJobFragment,
+                    bundle)
             }
         })
 

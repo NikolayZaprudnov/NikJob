@@ -40,8 +40,11 @@ class UserJobFragment : Fragment(), removeJobDialog.DialogListener {
 
         val adapter = JobAdapter(object : OnJobInteractionListener {
             override fun onLink(job: Job) {
-                val linkIntent = Intent(Intent.ACTION_VIEW, Uri.parse(job.link))
-                startActivity(linkIntent)
+                val uriPost = "https://" + job.link
+                try {
+                    val linkIntent = Intent(Intent.ACTION_VIEW, Uri.parse(uriPost))
+                    startActivity(linkIntent)
+                } catch (e: Exception){ }
             }
 
             override fun onDelete(job: Job) {

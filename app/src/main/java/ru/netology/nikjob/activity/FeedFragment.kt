@@ -128,7 +128,8 @@ class FeedFragment : Fragment() {
                 try {
                     val linkIntent = Intent(Intent.ACTION_VIEW, Uri.parse(uriPost))
                     startActivity(linkIntent)
-                } catch (e: Exception){ }
+                } catch (e: Exception) {
+                }
 
             }
 
@@ -139,7 +140,7 @@ class FeedFragment : Fragment() {
                 bundle.putLong("authorId", post.authorId)
                 bundle.putLong("userId", appAuth.authStateFlow.value.id)
                 findNavController().navigate(R.id.action_feedFragment_to_userJobFragment,
-               bundle)
+                    bundle)
             }
         })
         binding.list.adapter = adapter.withLoadStateHeaderAndFooter(
@@ -203,9 +204,13 @@ class FeedFragment : Fragment() {
         }
         val draftText = arguments?.textArg.toString()
         binding.newpost.setOnClickListener {
-            findNavController().navigate(R.id.action_feedFragment_to_newPostFragment)
-            Bundle().apply {
-                textArg = draftText
+            if (!authViewModel.authorized) {
+                dialog.show(manager, "")
+            } else {
+                findNavController().navigate(R.id.action_feedFragment_to_newPostFragment)
+                Bundle().apply {
+                    textArg = draftText
+                }
             }
         }
 

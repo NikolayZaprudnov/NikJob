@@ -102,6 +102,12 @@
         <action
             android:id="@+id/action_eventFragment_self"
             app:destination="@id/eventFragment" />
+        <action
+            android:id="@+id/action_eventFragment_to_oneEventFragment"
+            app:destination="@id/oneEventFragment" />
+        <action
+            android:id="@+id/action_eventFragment_to_editEventFragment"
+            app:destination="@id/editEventFragment" />
     </fragment>
     <fragment
         android:id="@+id/userJobFragment"
@@ -119,4 +125,25 @@
         android:id="@+id/newEventFragment"
         android:name="ru.netology.nikjob.activity.NewEventFragment"
         android:label="NewEventFragment" />
+    <fragment
+        android:id="@+id/oneEventFragment"
+        android:name="ru.netology.nikjob.activity.OneEventFragment"
+        android:label="OneEventFragment" >
+        <action
+            android:id="@+id/action_oneEventFragment_to_registrationFragment"
+            app:destination="@id/registrationFragment" />
+        <action
+            android:id="@+id/action_oneEventFragment_to_newEventFragment"
+            app:destination="@id/newEventFragment" />
+        <action
+            android:id="@+id/action_oneEventFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+        <action
+            android:id="@+id/action_oneEventFragment_to_editEventFragment"
+            app:destination="@id/editEventFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editEventFragment"
+        android:name="ru.netology.nikjob.activity.EditEventFragment"
+        android:label="EditEventFragment" />
 </navigation>

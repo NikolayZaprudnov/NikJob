@@ -18,7 +18,7 @@ import ru.netology.nikjob.enumeration.AttachmentType
 class EventViewHolder(
     private val binding: EventCardBinding,
     private val eventOnInteractionListener: EventOnInteractionListener,
-    ) : RecyclerView.ViewHolder(binding.root) {
+) : RecyclerView.ViewHolder(binding.root) {
     private val player = MediaPlayer()
     fun bind(post: Event) {
         binding.apply {
@@ -27,7 +27,7 @@ class EventViewHolder(
                 .load(post.authorAvatar)
                 .fitCenter()
                 .placeholder(R.drawable.ic_baseline_load_face_100)
-                .error(R.drawable.ic_baseline_error_100)
+                .error(R.drawable.ic_baseline_load_face_100)
                 .timeout(10_000)
                 .into(avatar)
             time.text = post.published
@@ -69,7 +69,7 @@ class EventViewHolder(
                 val scaleY = PropertyValuesHolder.ofFloat(View.SCALE_Y, 1F, 1.5F, 1F)
                 ObjectAnimator.ofPropertyValuesHolder(it, scaleX, scaleY).apply {
                     duration = 500
-                    repeatCount = 100
+                    repeatCount = 1
                     interpolator = BounceInterpolator()
                 }.start()
                 eventOnInteractionListener.onLike(post)
@@ -86,6 +86,11 @@ class EventViewHolder(
                 eventOnInteractionListener.onPlay(post, attachmentVideo, player)
             }
             attachmentAudio.setOnClickListener {
+                if (attachmentAudio.baseline == R.drawable.ic_baseline_play_circle_24) {
+                    attachmentAudio.setImageResource(R.drawable.ic_baseline_pause_circle_24)
+                } else {
+                    attachmentAudio.setImageResource(R.drawable.ic_baseline_play_circle_24)
+                }
                 eventOnInteractionListener.onPlay(post, attachmentVideo, player)
             }
             url.setOnClickListener {

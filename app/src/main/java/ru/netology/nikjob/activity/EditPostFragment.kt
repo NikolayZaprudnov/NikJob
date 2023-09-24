@@ -48,6 +48,7 @@ class EditPostFragment : Fragment() {
                     }
                     R.id.not -> {
                         findNavController().navigateUp()
+                        true
                     }
                     else -> false
 
